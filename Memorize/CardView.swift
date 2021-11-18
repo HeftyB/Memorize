@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct CardView: View {
-    var content: String
-    @State var isFaceUp: Bool = true
+    var emoji: String
+    var description: String
+    
+    @State var isFaceUp: Bool = false
     
     var body: some View {
         ZStack {
@@ -18,7 +20,8 @@ struct CardView: View {
             if isFaceUp {
                 shape.fill().foregroundColor(.white)
                 shape.strokeBorder(lineWidth: 3.0)
-                Text(content).font(.largeTitle)
+                Text(emoji).font(.largeTitle)
+                Text(description).font(.caption)
             } else {
                 shape.fill()
             }
@@ -31,6 +34,6 @@ struct CardView: View {
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        CardView(content: "🤙")
+        CardView(emoji: "🤙", description: "Broseph")
     }
 }

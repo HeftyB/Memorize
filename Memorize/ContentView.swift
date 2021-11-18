@@ -7,17 +7,30 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
     
-    var emojis = ["🚗", "🚛", "🚕", "🚜", "🛵", "🚍", "🚠", "🚝","🚆","🚢"]
-    @State var count = 4
+    @State var emojis: [EmojiCard] = []
+    
+    @State var selection = ""
+    
+    let emo = Emoji()
+    
+    
+    
     
     var body: some View {
         VStack {
+            if selection.isEmpty {Text("Memorize").font(.title)} else { Text(selection).font(.title) }
+                
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(emojis[0..<count], id: \.self) { e in
-                        CardView(content: e)
+                    
+                    
+                    
+                    ForEach(emojis) { emo in
+                        
+                        CardView(emoji: emo.emoji, description: emo.description)
                             .aspectRatio(2/3, contentMode: .fit)
                     }
                 }
@@ -27,17 +40,16 @@ struct ContentView: View {
             Spacer()
             
             HStack {
-                Button(action: { if count > 1 {count -= 1} }) {
-                    Image(systemName: "minus.circle")
-                }
                 
-                Spacer()
+                Button("Animals", action:{ emojis = emo.getShuffledCard(.easy, theme: .animals) })
+                Button("Food", action:{ emojis = emo.getShuffledCard(.easy, theme: .food) })
+                Button("Flags", action:{ emojis = emo.getShuffledCard(.easy, theme: .flags) })
                 
-                Button(action: { if count < emojis.count {count += 1} }) {
-                    Image(systemName: "plus.circle")
-                }
+            
             }
-        }
+        }.onAppear(perform: {
+            emojis = emo.getShuffledCard(.easy, theme: .animals)
+        })
         .padding(.horizontal)
     }
 }
