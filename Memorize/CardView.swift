@@ -8,32 +8,31 @@
 import SwiftUI
 
 struct CardView: View {
-    var emoji: String
-    var description: String
     
-    @State var isFaceUp: Bool = false
+    let card: MemoryGame<String>.Card
     
     var body: some View {
         ZStack {
             let shape = RoundedRectangle(cornerRadius: 20.0)
             
-            if isFaceUp {
+            if card.isFaceUp {
                 shape.fill().foregroundColor(.white)
                 shape.strokeBorder(lineWidth: 3.0)
-                Text(emoji).font(.largeTitle)
-                Text(description).font(.caption)
+                VStack {
+                    Text(card.content).font(.largeTitle)
+//                    Text(description).font(.caption)
+                }
+            } else if card.isMatched {
+                shape.opacity(0)
             } else {
                 shape.fill()
             }
-        }
-        .onTapGesture {
-            isFaceUp.toggle()
         }
     }
 }
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        CardView(emoji: "🤙", description: "Broseph")
+        CardView(card: MemoryGame<String>.Card(content: "🍌", id: 1))
     }
 }

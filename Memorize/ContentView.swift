@@ -10,55 +10,76 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @ObservedObject
+    var viewModel: EmojiMemoryGame
+
     @State var emojis: [EmojiCard] = []
-    
-    @State var selection = ""
-    
     let emo = Emoji()
     
-    
-    
-    
     var body: some View {
+        
         VStack {
-            if selection.isEmpty {Text("Memorize").font(.title)} else { Text(selection).font(.title) }
-                
+                // TITLE +  SELECTION
+//            if selection.isEmpty {Text("Memorize").font(.title)} else { Text(selection).font(.title) }
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    
-                    
-                    
-                    ForEach(emojis) { emo in
-                        
-                        CardView(emoji: emo.emoji, description: emo.description)
+                    ForEach(viewModel.cards) { card in
+                        CardView(card: card)
                             .aspectRatio(2/3, contentMode: .fit)
+                            .onTapGesture {
+                                viewModel.choose(card)
+                            }
                     }
                 }
                 .foregroundColor(.red)
             }
-         
             Spacer()
-            
             HStack {
+                Spacer()
+                    // ANIMAL BUTTON
+                Button(action: { emojis = emo.getShuffledCard(.easy, theme: .animals) }) {
+                    VStack {
+                        Image(systemName: "pawprint")
+                            .frame(width: 25, height: 25)
+                            
+                        Text("Animals").font(.footnote)
+                    }
                 
-                Button("Animals", action:{ emojis = emo.getShuffledCard(.easy, theme: .animals) })
-                Button("Food", action:{ emojis = emo.getShuffledCard(.easy, theme: .food) })
-                Button("Flags", action:{ emojis = emo.getShuffledCard(.easy, theme: .flags) })
-                
-            
+                }
+                Spacer()
+                    // FOOD BUTTON
+                Button(action: { emojis = emo.getShuffledCard(.easy, theme: .food) }) {
+                    VStack {
+                        Image(systemName: "fork.knife")
+                            .frame(width: 25, height: 25)
+                            
+                        Text("Food").font(.footnote)
+                    }
+                }
+                Spacer()
+                    // FLAG BUTTON
+                Button(action: { emojis = emo.getShuffledCard(.easy, theme: .flags) }) {
+                    VStack {
+                        Image(systemName: "flag")
+                            .frame(width: 25, height: 25)
+                            
+                        Text("Flags").font(.footnote)
+                    }
+                }
+                Spacer()
             }
-        }.onAppear(perform: {
-            emojis = emo.getShuffledCard(.easy, theme: .animals)
-        })
+            .frame(minWidth: 0, maxWidth: .infinity)
+        }
         .padding(.horizontal)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let game = EmojiMemoryGame()
+        ContentView(viewModel: game)
             .preferredColorScheme(.dark)
-        ContentView()
+        ContentView(viewModel: game)
             .preferredColorScheme(.light)
     }
 }
