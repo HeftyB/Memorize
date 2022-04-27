@@ -33,42 +33,42 @@ struct ContentView: View {
                 }
                 .foregroundColor(.red)
             }
-            Spacer()
-            HStack {
-                Spacer()
-                    // ANIMAL BUTTON
-                Button(action: { emojis = emo.getShuffledCard(.easy, theme: .animals) }) {
-                    VStack {
-                        Image(systemName: "pawprint")
-                            .frame(width: 25, height: 25)
-                            
-                        Text("Animals").font(.footnote)
-                    }
-                
-                }
-                Spacer()
-                    // FOOD BUTTON
-                Button(action: { emojis = emo.getShuffledCard(.easy, theme: .food) }) {
-                    VStack {
-                        Image(systemName: "fork.knife")
-                            .frame(width: 25, height: 25)
-                            
-                        Text("Food").font(.footnote)
-                    }
-                }
-                Spacer()
-                    // FLAG BUTTON
-                Button(action: { emojis = emo.getShuffledCard(.easy, theme: .flags) }) {
-                    VStack {
-                        Image(systemName: "flag")
-                            .frame(width: 25, height: 25)
-                            
-                        Text("Flags").font(.footnote)
-                    }
-                }
-                Spacer()
-            }
-            .frame(minWidth: 0, maxWidth: .infinity)
+//            Spacer()
+//            HStack {
+//                Spacer()
+//                    // ANIMAL BUTTON
+//                Button(action: { emojis = emo.getShuffledCard(.easy, theme: .animals) }) {
+//                    VStack {
+//                        Image(systemName: "pawprint")
+//                            .frame(width: 25, height: 25)
+//
+//                        Text("Animals").font(.footnote)
+//                    }
+//
+//                }
+//                Spacer()
+//                    // FOOD BUTTON
+//                Button(action: { emojis = emo.getShuffledCard(.easy, theme: .food) }) {
+//                    VStack {
+//                        Image(systemName: "fork.knife")
+//                            .frame(width: 25, height: 25)
+//
+//                        Text("Food").font(.footnote)
+//                    }
+//                }
+//                Spacer()
+//                    // FLAG BUTTON
+//                Button(action: { emojis = emo.getShuffledCard(.easy, theme: .flags) }) {
+//                    VStack {
+//                        Image(systemName: "flag")
+//                            .frame(width: 25, height: 25)
+//
+//                        Text("Flags").font(.footnote)
+//                    }
+//                }
+//                Spacer()
+//            }
+//            .frame(minWidth: 0, maxWidth: .infinity)
         }
         .padding(.horizontal)
     }

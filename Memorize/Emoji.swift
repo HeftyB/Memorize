@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Easy emoji / description pair
 struct Emoji {
     let animals = [ "Dog" : "🐕",
         "Cat" : "🐈",
@@ -361,6 +362,24 @@ struct Emoji {
         "Zambia" : "🇿🇲",
         "Zimbabwe" : "🇿🇼",
         
+    ]
+    
+    let vehicles = [
+        "🚗",
+        "🚕",
+        "🚌",
+        "🏎",
+        "🚓",
+        "🚑",
+        "🚒",
+        "🛻",
+        "🚜",
+        "🛵",
+        "🏍",
+        "✈️",
+        "🚀",
+        "🚁",
+        "⛵️",
     ]
     
     
