@@ -19,8 +19,17 @@ struct ContentView: View {
     var body: some View {
         
         VStack {
+            HStack {
+                
+                Button(action: {EmojiMemoryGame.createMemoryGame()}) {
+                    Text("New Game")
+                }
+            }
                 // TITLE +  SELECTION
 //            if selection.isEmpty {Text("Memorize").font(.title)} else { Text(selection).font(.title) }
+            
+//            Text("Points: \(viewModel.score)/").font(.title2)
+            
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                     ForEach(viewModel.cards) { card in

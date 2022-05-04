@@ -10,13 +10,10 @@ import SwiftUI
 
 
 class EmojiMemoryGame: ObservableObject {
-    static let emojis = Emoji().vehicles
     
-    static func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>(nummberOfPairsOfCards: 4) { pairIndex in
-            emojis[pairIndex]
-        }
-    }
+    static let emojis = [String](Emoji().animals.keys)
+        
+    private var totalPairs = 8
     
     @Published private var model: MemoryGame<String> = createMemoryGame()
     
@@ -25,7 +22,48 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     
+    
+    
+    
+    
+    
+    static func createMemoryGame() -> MemoryGame<String> {
+        MemoryGame<String>(nummberOfPairsOfCards: totalPairs) { pairIndex in
+            emojis[pairIndex]
+        }
+    }
+    
+    
+    
+    
+    
+    // MARK: - Intent(s)
+    
     func choose(_ card: MemoryGame<String>.Card) {
         model.choose(card)
+    }
+    
+    // newGame
+    func createNewGame() {
+        /// code here
+    }
+    
+    // select theme
+    func selectTheme(_ theme: String) {
+        /// code here
+    }
+    
+    // change difficulty
+    func selectDifficulty (_ difficulty: Difficulty) {
+        switch difficulty {
+        case .easy:
+            totalPairs = 8
+        case .medium:
+            totalPairs = 12
+        case .hard:
+            totalPairs = 16
+        case .expert:
+            totalPairs = 20
+        }
     }
 }

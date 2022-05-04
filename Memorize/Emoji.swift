@@ -7,9 +7,56 @@
 
 import Foundation
 
-// Easy emoji / description pair
+// Universal easy emoji / description pair lookup
 struct Emoji {
-    let animals = [ "Dog" : "🐕",
+    
+    let animals = [ "🐕": "Dog",
+        "🐈": "Cat",
+        "🐁": "Mouse",
+        "🐹": "Hamster",
+        "🐰": "Rabbit",
+        "🦊": "Fox",
+        "🐻": "Bear",
+        "🐼": "Panda Bear",
+        "🐻‍❄️": "Polar Bear",
+        "🐨": "Koala",
+        "🐅": "Tiger",
+        "🐆": "Leopard",
+        "🦁": "Lion",
+        "🐄": "Cow",
+        "🐖": "Pig",
+        "🐸": "Frog",
+        "🐒": "Monkey",
+        "🐔": "Chicken",
+        "🐧": "Penguin",
+        "🦆": "Duck",
+        "🦅": "Eagle",
+        "🦉": "Owl",
+        "🐎": "Horse",
+        "🐝": "Bee",
+        "🪱": "Worm",
+        "🦋": "Butterfly",
+        "🐌": "Snail",
+        "🐞": "Ladybug",
+        "🐜": "Ant",
+        "🕷": "Spider",
+        "🦂": "Scorpion",
+        "🐢": "Turtle",
+        "🐍": "Snake",
+        "🦎": "Lizard",
+        "🦐": "Shrimp",
+        "🦞": "Lobster",
+        "🦓": "Zebra",
+        "🐬": "Dolphin",
+        "🐳": "Whale",
+        "🐘": "Elephant",
+        "🦒": "Giraffe",
+        "🦘": "Kangaroo",
+        "🐑": "Sheep",
+        "🦙": "Llama",
+        "🦝": "Racoon"]
+    
+    let animalsText = [ "Dog" : "🐕",
         "Cat" : "🐈",
         "Mouse" : "🐁",
         "Hamster" : "🐹",
@@ -55,7 +102,64 @@ struct Emoji {
         "Llama" : "🦙",
         "Racoon" : "🦝"]
     
-    let food = [ "Apple" : "🍎",
+    let food = [
+        "🍎": "Apple",
+        "🍋": "Lemon",
+        "🍌": "Banana",
+        "🍐": "Pear",
+        "🍉": "Watermelon",
+        "🍇": "Grapes",
+        "🍓": "Strawberry",
+        "🫐": "Blueberries",
+        "🍒": "Cherries",
+        "🍑": "Peach",
+        "🍍": "Pineapple",
+        "🥥": "Coconut",
+        "🥝": "Kiwi",
+        "🍅": "Tomato",
+        "🍆": "Eggplant",
+        "🥑": "Avocado",
+        "🥦": "Broccoli",
+        "🥬": "Lettuce",
+        "🌶": "Pepper",
+        "🫑": "Bell Pepper",
+        "🌽": "Corn",
+        "🥕": "Carrot",
+        "🫒": "Olive",
+        "🧅": "Onion",
+        "🥔": "Potato",
+        "🥐": "Croissant",
+        "🥯": "Bagel",
+        "🥨": "Pretzel",
+        "🧀": "Cheese",
+        "🥚": "Egg",
+        "🧈": "Butter",
+        "🥞": "Pancakes",
+        "🧇": "Waffles",
+        "🥓": "Bacon",
+        "🥩": "Steak",
+        "🌭": "Hot Dog",
+        "🍔": "Hamburger",
+        "🍟": "French Fries",
+        "🍕": "Pizza",
+        "🥪": "Sandwich",
+        "🌮": "Taco",
+        "🌯": "Burrito",
+        "🥗": "Salad",
+        "🍝": "Spaghetti",
+        "🍤": "Shrimp",
+        "🍚": "Rice",
+        "🍦": "Ice Cream",
+        "🥧": "Pie",
+        "🧁": "Cupcake",
+        "🎂": "Birthday Cake",
+        "🍭": "Lollipop",
+        "🍿": "Popcorn",
+        "🍩": "Doughnut",
+        "🍪": "Cookie",
+        "🥜": "Peanuts"]
+    
+    let foodText = [ "Apple" : "🍎",
         "Lemon" : "🍋",
         "Banana" : "🍌",
         "Pear" : "🍐",
@@ -395,6 +499,8 @@ struct Emoji {
             dict = food
         case .flags:
             dict = flags
+        case .vehicles:
+            dict = vehicles
         }
         
         switch difficulty {
@@ -430,18 +536,31 @@ struct Emoji {
     }
 }
 
-
-struct EmojiCard: Hashable, Identifiable {
-    let emoji: String
-    let description: String
-    
-    var id: String {
-        description
-    }
+func getEmojiCards(theme: Theme) -> [MemoryGame<String>.Card] {
+    /// code here
 }
 
-enum Theme {
-    case animals, food, flags
+func getRandomEmojiCards() -> [MemoryGame<String>.Card] {
+    
+}
+
+//struct EmojiCard: Hashable, Identifiable {
+//    let emoji: String
+//    let description: String
+//
+//    var id: String {
+//        description
+//    }
+//}
+
+//enum Theme {
+//    case animals, food, flags, vehicles
+//}
+
+struct Theme {
+    var name: String
+    var emojis: Array<String>
+    var color: String
 }
 
 enum Difficulty {

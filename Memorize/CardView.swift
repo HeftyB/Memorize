@@ -20,7 +20,7 @@ struct CardView: View {
                 shape.strokeBorder(lineWidth: 3.0)
                 VStack {
                     Text(card.content).font(.largeTitle)
-                    Text(card.description ?? " ").font(.caption)
+//                    Text(card.description ?? " ").font(.caption)
                 }
             } else if card.isMatched {
                 shape.opacity(0)

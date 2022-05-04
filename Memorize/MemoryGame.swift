@@ -12,6 +12,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
     
     private var indexOfFaceUpCard: Int?
     
+    /// to check timing of move for points (future realease)
+//    var moveStamp: Date
+    var totalPoints: Int
+    
     mutating func choose(_ card: Card) {
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
             
@@ -32,20 +36,22 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
         }
     }
        
-    init(nummberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
+    init(nummberOfPairsOfCards: Int, createCardContent: (Int) -> [CardContent]) {
         cards = Array<Card>()
+        totalPoints = 0
         
-        // adds the card as a pair
-        for pairIndex in 0..<nummberOfPairsOfCards {
-            let content: CardContent = createCardContent(pairIndex)
-            cards.append(Card(content: content, id:pairIndex*2))
-            cards.append(Card(content: content, id:pairIndex*2+1))
+        let content = createCardContent(nummberOfPairsOfCards)
+        
+        for thing in content {
+            cards.append(Card(content: thing, id:cards.count+1))
+            cards.append(Card(content: thing, id:cards.count+1))
         }
     }
     
     struct Card: Identifiable {
         var isFaceUp: Bool = false
         var isMatched: Bool = false
+        var flipped: Bool = false
         var content: CardContent
         var description: String?
         var id: Int
