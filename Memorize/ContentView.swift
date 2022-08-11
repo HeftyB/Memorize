@@ -13,16 +13,19 @@ struct ContentView: View {
     @ObservedObject
     var viewModel: EmojiMemoryGame
 
-    @State var emojis: [EmojiCard] = []
-    let emo = Emoji()
+//    @State var emojis: [EmojiCard] = []
+//    let emo = Emoji()
     
     var body: some View {
         
         VStack {
             HStack {
                 
-                Button(action: {EmojiMemoryGame.createMemoryGame()}) {
-                    Text("New Game")
+                HStack {
+                    Button(action: {EmojiMemoryGame.createTestGame(viewModel)()}) {
+                        Text("New Game")
+                    }
+                    .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color.green/*@END_MENU_TOKEN@*/)
                 }
             }
                 // TITLE +  SELECTION

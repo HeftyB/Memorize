@@ -10,7 +10,8 @@ import Foundation
 // Universal easy emoji / description pair lookup
 struct Emoji {
     
-    let animals = [ "🐕": "Dog",
+    let animals = [
+        "🐕": "Dog",
         "🐈": "Cat",
         "🐁": "Mouse",
         "🐹": "Hamster",
@@ -487,62 +488,62 @@ struct Emoji {
     ]
     
     
-    func getShuffledCard (_ difficulty: Difficulty, theme: Theme) -> [EmojiCard] {
-        
-        var arr: [EmojiCard]
-        let dict: [String : String]
-        
-        switch theme {
-        case .animals:
-            dict = animals
-        case .food:
-            dict = food
-        case .flags:
-            dict = flags
-        case .vehicles:
-            dict = vehicles
-        }
-        
-        switch difficulty {
-        case .easy:
-            arr = randomEmoji(8, dict: dict)
-        case .medium:
-            arr = randomEmoji(16, dict: dict)
-        case .hard:
-            arr = randomEmoji(24, dict: dict)
-        case .expert:
-            print("expert")
-            arr = []
-//            animals.forEach() { key, value in
-//                arr.append(EmojiCard(emoji: value, description: key))
-//            }
-            
-        }
-        
-        return arr
-    }
+//    func getShuffledCard (_ difficulty: Difficulty, theme: Theme) -> [EmojiCard] {
+//
+//        var arr: [EmojiCard]
+//        let dict: [String : String]
+//
+//        switch theme {
+//        case .animals:
+//            dict = animals
+//        case .food:
+//            dict = food
+//        case .flags:
+//            dict = flags
+//        case .vehicles:
+//            dict = vehicles
+//        }
+//
+//        switch difficulty {
+//        case .easy:
+//            arr = randomEmoji(8, dict: dict)
+//        case .medium:
+//            arr = randomEmoji(16, dict: dict)
+//        case .hard:
+//            arr = randomEmoji(24, dict: dict)
+//        case .expert:
+//            print("expert")
+//            arr = []
+////            animals.forEach() { key, value in
+////                arr.append(EmojiCard(emoji: value, description: key))
+////            }
+//
+//        }
+//
+//        return arr
+//    }
+//
     
-    
-    func randomEmoji (_ num: Int, dict: [String: String]) -> [EmojiCard] {
-        
-        var sets = Set<EmojiCard>()
-        
-        while sets.count < num {
-            let e = dict.randomElement()!
-            sets.insert(EmojiCard(emoji: e.value, description: e.key))
-        }
-        
-        return Array(sets)
-    }
+//    func randomEmoji (_ num: Int, dict: [String: String]) -> [EmojiCard] {
+//
+//        var sets = Set<EmojiCard>()
+//
+//        while sets.count < num {
+//            let e = dict.randomElement()!
+//            sets.insert(EmojiCard(emoji: e.value, description: e.key))
+//        }
+//
+//        return Array(sets)
+//    }
 }
-
-func getEmojiCards(theme: Theme) -> [MemoryGame<String>.Card] {
-    /// code here
-}
-
-func getRandomEmojiCards() -> [MemoryGame<String>.Card] {
-    
-}
+//
+//func getEmojiCards(theme: Theme) -> [MemoryGame<String>.Card] {
+//    /// code here
+//}
+//
+//func getRandomEmojiCards() -> [MemoryGame<String>.Card] {
+//
+//}
 
 //struct EmojiCard: Hashable, Identifiable {
 //    let emoji: String
@@ -558,11 +559,23 @@ func getRandomEmojiCards() -> [MemoryGame<String>.Card] {
 //}
 
 struct Theme {
-    var name: String
-    var emojis: Array<String>
-    var color: String
+    var name: ThemeName
+    var emojis: Dictionary<String,String>
+    var color: ThemeColor
 }
 
-enum Difficulty {
+enum Difficulty: String, CaseIterable, Identifiable {
     case easy, medium, hard, expert
+    
+    var id: String { self.rawValue }
+}
+
+enum ThemeColor {
+    case yellow, blue, green
+}
+
+enum ThemeName: String, CaseIterable, Identifiable {
+    case vehicles, animals, food, flags
+    
+    var id: String { self.rawValue }
 }

@@ -7,13 +7,11 @@
 
 import Foundation
 
-struct MemoryGame<CardContent> where CardContent: Equatable{
+struct MemoryGame<CardContent> where CardContent: Hashable {
     private(set) var cards: Array<Card>
     
     private var indexOfFaceUpCard: Int?
     
-    /// to check timing of move for points (future realease)
-//    var moveStamp: Date
     var totalPoints: Int
     
     mutating func choose(_ card: Card) {
@@ -36,16 +34,17 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
         }
     }
        
-    init(nummberOfPairsOfCards: Int, createCardContent: (Int) -> [CardContent]) {
+    init(nummberOfPairsOfCards: Int, createCardContent: (Int) -> [CardContent:CardContent]) {
         cards = Array<Card>()
         totalPoints = 0
         
         let content = createCardContent(nummberOfPairsOfCards)
         
-        for thing in content {
-            cards.append(Card(content: thing, id:cards.count+1))
-            cards.append(Card(content: thing, id:cards.count+1))
+        for (k,v) in content {
+            cards.append(Card(content: k, description: v, id: "\(k)"))
+            cards.append(Card(content: k, description: v , id: "\(k)Match"))
         }
+        cards.shuffle()
     }
     
     struct Card: Identifiable {
@@ -53,7 +52,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
         var isMatched: Bool = false
         var flipped: Bool = false
         var content: CardContent
-        var description: String?
-        var id: Int
+        var description: CardContent
+        var id: String
     }
 }
