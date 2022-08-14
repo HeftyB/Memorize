@@ -10,13 +10,12 @@ import SwiftUI
 
 
 class EmojiMemoryGame: ObservableObject {
-    
     let emo = Emoji()
             
     @Published private var model: MemoryGame<String> = createMemoryGame()
     
     var themeName: ThemeName
-//
+
     var difficulty: Difficulty
     
     var currSelect: String? {
@@ -35,27 +34,34 @@ class EmojiMemoryGame: ObservableObject {
         model.cards
     }
     
+    typealias Theme = MemoryGame<String>.Theme
+    
     init() {
-//        theme = Theme(name: .animals, emojis: emo.animals, color: .green)
         difficulty = .easy
         themeName = .animals
     }
     
     
     static func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>() {
-            var dicts = [String:String]()
-            
-            while dicts.count < 4 {
-                let e = Emoji().animals.randomElement()!
-
-                if dicts[e.key] == nil {
-                    dicts[e.key] = e.value
-                }
-            }
-
-            return dicts
+        MemoryGame<String>(theme: Theme(name: .animals, content: Emoji().animals, color: .green), difficulty: .easy)
+    }
+    
+    func themeBuilder(_ themeName: ThemeName) -> Theme {
+        var t: Theme
+        
+        switch themeName {
+        case .vehicles:
+            t = Theme(name: .animals, content: emo.animals, color: .green)
+            print("H")
+        case .animals:
+            t = Theme(name: .animals, content: emo.animals, color: .green)
+        case .food:
+            t = Theme(name: .food, content: emo.food, color: .blue)
+        case .flags:
+            t = Theme(name: .flags, content: emo.flags, color: .yellow)
         }
+        
+        return t
     }
     
     // MARK: - Intent(s)
@@ -65,76 +71,16 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     func newGame() {
-        var totalPairs: Int
+        let t: Theme = themeBuilder(themeName)
         
-        switch difficulty {
-        case .easy:
-            totalPairs = 4
-        case .medium:
-            totalPairs = 8
-        case .hard:
-            totalPairs = 10
-        case .expert:
-            totalPairs = 12
-        }
-        
-        var t: Theme = Theme(name: .animals, emojis: emo.animals, color: .purple)
-        
-        switch themeName {
-        case .vehicles:
-            print("H")
-//            theme = Theme(name: .vehicles, emojis: Emoji().vehicles, color: .yellow)
-        case .animals:
-            t = Theme(name: .animals, emojis: emo.animals, color: .green)
-        case .food:
-            t = Theme(name: .food, emojis: emo.food, color: .blue)
-        case .flags:
-            t = Theme(name: .flags, emojis: emo.flags, color: .yellow)
-
-        }
-        
-        model = MemoryGame<String>() {
-                var dicts = [String:String]()
-                
-                while dicts.count < totalPairs {
-                    let e = t.emojis.randomElement()!
-
-                    if dicts[e.key] == nil {
-                        dicts[e.key] = e.value
-                    }
-                }
-
-                return dicts
-            }
+        model = MemoryGame<String>(theme: t, difficulty: difficulty)
     }
     
     func customGame(diff: Difficulty, tName: ThemeName) {
         difficulty = diff
         themeName = tName
-        newGame()
+//        newGame()
+        model = MemoryGame<String>(theme: themeBuilder(tName), difficulty: diff)
     }
-}
-
-
-struct Theme {
-    var name: ThemeName
-    var emojis: Dictionary<String,String>
-    var color: ThemeColor
-}
-
-enum Difficulty: String, CaseIterable, Identifiable {
-    case easy, medium, hard, expert
-    
-    var id: String { self.rawValue }
-}
-
-enum ThemeColor {
-    case yellow, blue, green, purple
-}
-
-enum ThemeName: String, CaseIterable, Identifiable {
-    case vehicles, animals, food, flags
-    
-    var id: String { self.rawValue }
 }
    

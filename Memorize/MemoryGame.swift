@@ -15,6 +15,8 @@ struct MemoryGame<CardContent> where CardContent: Hashable {
     var totalPoints: Int
     var currSelect: CardContent?
     var isMatch: Bool
+    var difficulty: Difficulty
+    var theme: Theme
     
     mutating func choose(_ card: Card) {
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
@@ -41,13 +43,16 @@ struct MemoryGame<CardContent> where CardContent: Hashable {
         }
     }
        
-    init(createCardContent: () -> [CardContent:CardContent]) {
+    init(theme th: Theme, difficulty diff: Difficulty) {
         cards = Array<Card>()
         totalPoints = 0
         currSelect = nil
         isMatch = false
+        theme = th
+        difficulty = diff
         
-        let content = createCardContent()
+        
+        let content = deckBuilder()
         
         for (k,v) in content {
             cards.append(Card(content: k, description: v, id: "\(k)"))
@@ -64,4 +69,58 @@ struct MemoryGame<CardContent> where CardContent: Hashable {
         var description: CardContent
         var id: String
     }
+    
+    struct Theme {
+        var name: ThemeName
+        var content: Dictionary<CardContent,CardContent>
+        var color: ThemeColor
+    }
+    
+    func deckBuilder () -> [CardContent:CardContent] {
+        
+        var dicts = [CardContent:CardContent]()
+        let emo = theme.content
+        
+        var totalPairs: Int
+        
+        switch difficulty {
+        case .easy:
+            totalPairs = 4
+        case .medium:
+            totalPairs = 8
+        case .hard:
+            totalPairs = 10
+        case .expert:
+            totalPairs = 12
+        }
+
+        while dicts.count < totalPairs {
+            let e = emo.randomElement()!
+            
+            if dicts[e.key] != nil {
+                dicts[e.key] = e.value
+            }
+        }
+
+        return dicts
+    }
+    
+}
+
+
+
+enum Difficulty: String, CaseIterable, Identifiable {
+    case easy, medium, hard, expert
+    
+    var id: String { self.rawValue }
+}
+
+enum ThemeColor {
+    case yellow, blue, green, purple
+}
+
+enum ThemeName: String, CaseIterable, Identifiable {
+    case vehicles, animals, food, flags
+    
+    var id: String { self.rawValue }
 }
