@@ -15,32 +15,39 @@ class EmojiMemoryGame: ObservableObject {
             
     @Published private var model: MemoryGame<String> = createMemoryGame()
     
-    var theme: Theme
-    
+    var themeName: ThemeName
+//
     var difficulty: Difficulty
+    
+    var currSelect: String? {
+        model.currSelect
+    }
+    
+    var totalPoints: Int {
+        model.totalPoints
+    }
+    
+    var isMatch: Bool {
+        model.isMatch
+    }
     
     var cards: Array<MemoryGame<String>.Card> {
         model.cards
     }
     
     init() {
-        theme = Theme(name: .animals, emojis: emo.animals, color: .green)
+//        theme = Theme(name: .animals, emojis: emo.animals, color: .green)
         difficulty = .easy
+        themeName = .animals
     }
-    
-    
-    
-    
     
     
     static func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>(nummberOfPairsOfCards: 4) { _ in
+        MemoryGame<String>() {
             var dicts = [String:String]()
-            let emo = Emoji().animals
             
-//            return emo
             while dicts.count < 4 {
-                let e = emo.randomElement()!
+                let e = Emoji().animals.randomElement()!
 
                 if dicts[e.key] == nil {
                     dicts[e.key] = e.value
@@ -49,44 +56,6 @@ class EmojiMemoryGame: ObservableObject {
 
             return dicts
         }
-//        MemoryGame<String>(nummberOfPairsOfCards: 4) { pairIndex in
-//            emojis[pairIndex]
-//        }
-    }
-    
-    
-    func createTestGame() {
-        model = MemoryGame<String>(nummberOfPairsOfCards: 4) { _ in
-            var dicts = [String:String]()
-            let emo = Emoji().animals
-            
-//            return emo
-            while dicts.count < 4 {
-                let e = emo.randomElement()!
-
-                if dicts[e.key] == nil {
-                    dicts[e.key] = e.value
-                }
-            }
-
-            return dicts
-        }
-    }
-    
-    
-    func deckBuilder (numberOfCards: Int) -> [String:String] {
-        var dicts = [String:String]()
-        let emo = theme.emojis
-
-        while dicts.count < numberOfCards {
-            let e = emo.randomElement()!
-
-            if dicts[e.key] != nil {
-                dicts[e.key] = e.value
-            }
-        }
-
-        return dicts
     }
     
     // MARK: - Intent(s)
@@ -95,41 +64,77 @@ class EmojiMemoryGame: ObservableObject {
         model.choose(card)
     }
     
-    // newGame
-    func createNewGame(themeName: ThemeName, diff: Difficulty) {
-        
-        let totalPairs: Int
+    func newGame() {
+        var totalPairs: Int
         
         switch difficulty {
         case .easy:
-            totalPairs = 8
+            totalPairs = 4
         case .medium:
-            totalPairs = 12
+            totalPairs = 8
         case .hard:
-            totalPairs = 16
+            totalPairs = 10
         case .expert:
-            totalPairs = 20
+            totalPairs = 12
         }
         
-        selectTheme(themeName)
+        var t: Theme = Theme(name: .animals, emojis: emo.animals, color: .purple)
         
-        model = MemoryGame(nummberOfPairsOfCards: totalPairs) { _ in
-            deckBuilder(numberOfCards: totalPairs)
-        }
-    }
-    
-    // select theme
-    func selectTheme(_ themeName: ThemeName) {
         switch themeName {
         case .vehicles:
             print("H")
 //            theme = Theme(name: .vehicles, emojis: Emoji().vehicles, color: .yellow)
         case .animals:
-            theme = Theme(name: .animals, emojis: Emoji().animals, color: .green)
+            t = Theme(name: .animals, emojis: emo.animals, color: .green)
         case .food:
-            theme = Theme(name: .food, emojis: Emoji().food, color: .blue)
+            t = Theme(name: .food, emojis: emo.food, color: .blue)
         case .flags:
-            theme = Theme(name: .flags, emojis: Emoji().flags, color: .yellow)
+            t = Theme(name: .flags, emojis: emo.flags, color: .yellow)
+
         }
+        
+        model = MemoryGame<String>() {
+                var dicts = [String:String]()
+                
+                while dicts.count < totalPairs {
+                    let e = t.emojis.randomElement()!
+
+                    if dicts[e.key] == nil {
+                        dicts[e.key] = e.value
+                    }
+                }
+
+                return dicts
+            }
+    }
+    
+    func customGame(diff: Difficulty, tName: ThemeName) {
+        difficulty = diff
+        themeName = tName
+        newGame()
     }
 }
+
+
+struct Theme {
+    var name: ThemeName
+    var emojis: Dictionary<String,String>
+    var color: ThemeColor
+}
+
+enum Difficulty: String, CaseIterable, Identifiable {
+    case easy, medium, hard, expert
+    
+    var id: String { self.rawValue }
+}
+
+enum ThemeColor {
+    case yellow, blue, green, purple
+}
+
+enum ThemeName: String, CaseIterable, Identifiable {
+    case vehicles, animals, food, flags
+    
+    var id: String { self.rawValue }
+}
+   
