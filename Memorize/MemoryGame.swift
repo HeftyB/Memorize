@@ -56,7 +56,7 @@ struct MemoryGame<CardContent> where CardContent: Hashable {
         
         for (k,v) in content {
             cards.append(Card(content: k, description: v, id: "\(k)"))
-            cards.append(Card(content: k, description: v , id: "\(k)Match"))
+            cards.append(Card(content: k, description: v, id: "\(k)Match"))
         }
         cards.shuffle()
     }
@@ -97,7 +97,7 @@ struct MemoryGame<CardContent> where CardContent: Hashable {
         while dicts.count < totalPairs {
             let e = emo.randomElement()!
             
-            if dicts[e.key] != nil {
+            if dicts[e.key] == nil {
                 dicts[e.key] = e.value
             }
         }

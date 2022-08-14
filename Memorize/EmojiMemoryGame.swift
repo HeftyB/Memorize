@@ -51,6 +51,7 @@ class EmojiMemoryGame: ObservableObject {
         
         switch themeName {
         case .vehicles:
+            // TODO 
             t = Theme(name: .animals, content: emo.animals, color: .green)
             print("H")
         case .animals:
