@@ -12,6 +12,32 @@ struct ContentView: View {
     
     @ObservedObject
     var viewModel: EmojiMemoryGame
+    var diffColor: Color {
+        
+        switch viewModel.difficulty {
+        case .easy:
+            return .blue
+        case .medium:
+            return .green
+        case .hard:
+            return .orange
+        case .expert:
+            return .red
+        }
+    }
+    
+    var cardColor: Color {
+        switch viewModel.theme.color {
+        case .yellow:
+            return .yellow
+        case .blue:
+            return .blue
+        case .green:
+            return .green
+        case .purple:
+            return .purple
+        }
+    }
     
     @State
     private var showSettings = false
@@ -19,7 +45,12 @@ struct ContentView: View {
     var body: some View {
         
         VStack {
-            
+            HStack {
+                Text("Practice matching your \(viewModel.theme.name.rawValue)")
+                Text("|")
+                Text(viewModel.difficulty.rawValue).foregroundColor(diffColor)
+            }
+            .font(.caption2)
             ZStack(alignment: .trailing) {
                 Rectangle()
                     .frame(height: 48.0)
@@ -53,7 +84,7 @@ struct ContentView: View {
                             }
                     }
                 }
-                .foregroundColor(.red)
+                .foregroundColor(cardColor)
             }
             
             Divider()

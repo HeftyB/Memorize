@@ -21,12 +21,18 @@ struct MemoryGame<CardContent> where CardContent: Hashable {
     mutating func choose(_ card: Card) {
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
             isMatch = false
+            
             if let potentialMatchIndex = indexOfFaceUpCard {
                 if cards[chosenIndex].content == cards[potentialMatchIndex].content {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
-                    totalPoints += 14823
+                    totalPoints += 1000
+                    if !cards[chosenIndex].beenSeen { totalPoints += 500}
+                    if !cards[potentialMatchIndex].beenSeen { totalPoints += 500}
                     isMatch = true
+                }
+                else {
+                    if cards[chosenIndex].beenSeen { totalPoints -= 300}
                 }
                 indexOfFaceUpCard = nil
                 currSelect = nil
@@ -37,7 +43,9 @@ struct MemoryGame<CardContent> where CardContent: Hashable {
                 indexOfFaceUpCard = chosenIndex
                 currSelect = nil
             }
-            
+            if !cards[chosenIndex].beenSeen {
+                cards[chosenIndex].beenSeen = true
+            }
             cards[chosenIndex].isFaceUp.toggle()
             currSelect = cards[chosenIndex].description
         }
@@ -65,6 +73,7 @@ struct MemoryGame<CardContent> where CardContent: Hashable {
         var isFaceUp: Bool = false
         var isMatched: Bool = false
         var flipped: Bool = false
+        var beenSeen: Bool = false
         var content: CardContent
         var description: CardContent
         var id: String

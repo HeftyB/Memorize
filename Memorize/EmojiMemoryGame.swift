@@ -36,6 +36,10 @@ class EmojiMemoryGame: ObservableObject {
     
     typealias Theme = MemoryGame<String>.Theme
     
+    var theme: Theme {
+        model.theme
+    }
+    
     init() {
         difficulty = .easy
         themeName = .animals
@@ -72,8 +76,8 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     func newGame() {
-        let t: Theme = themeBuilder(themeName)
-        
+        let t: Theme = themeBuilder(ThemeName.allCases.randomElement()!)
+        themeName = t.name
         model = MemoryGame<String>(theme: t, difficulty: difficulty)
     }
     
