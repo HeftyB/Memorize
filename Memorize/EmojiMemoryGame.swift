@@ -10,7 +10,7 @@ import SwiftUI
 
 
 class EmojiMemoryGame: ObservableObject {
-    let emo = Emoji()
+    private let emo = Emoji()
             
     @Published private var model: MemoryGame<String> = createMemoryGame()
     
@@ -18,46 +18,34 @@ class EmojiMemoryGame: ObservableObject {
 
     var difficulty: Difficulty
     
-    var currSelect: String? {
-        model.currSelect
-    }
+    var currSelect: String? { model.currSelect }
     
-    var totalPoints: Int {
-        model.totalPoints
-    }
+    var totalPoints: Int { model.totalPoints }
     
-    var isMatch: Bool {
-        model.isMatch
-    }
+    var isMatch: Bool { model.isMatch }
     
-    var cards: Array<MemoryGame<String>.Card> {
-        model.cards
-    }
+    var cards: Array<MemoryGame<String>.Card> { model.cards }
     
-    typealias Theme = MemoryGame<String>.Theme
-    
-    var theme: Theme {
-        model.theme
-    }
+    var cardColor: ThemeColor
     
     init() {
         difficulty = .easy
         themeName = .animals
+        cardColor = .green
     }
     
     
-    static func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>(theme: Theme(name: .animals, content: Emoji().animals, color: .green), difficulty: .easy)
+    private static func createMemoryGame() -> MemoryGame<String> {
+        let t = Theme<String>(name: .animals, content: Emoji().animals, color: .green)
+        return MemoryGame<String>(cardContent: t.content, difficulty: .easy)
     }
     
-    func themeBuilder(_ themeName: ThemeName) -> Theme {
-        var t: Theme
+    func themeBuilder(_ themeName: ThemeName) -> Theme<String> {
+        var t: Theme<String>
         
         switch themeName {
         case .vehicles:
-            // TODO 
-            t = Theme(name: .animals, content: emo.animals, color: .green)
-            print("H")
+            t = Theme(name: .vehicles, content: emo.vehicles, color: .purple)
         case .animals:
             t = Theme(name: .animals, content: emo.animals, color: .green)
         case .food:
@@ -76,16 +64,18 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     func newGame() {
-        let t: Theme = themeBuilder(ThemeName.allCases.randomElement()!)
+        let t = themeBuilder(ThemeName.allCases.randomElement()!)
         themeName = t.name
-        model = MemoryGame<String>(theme: t, difficulty: difficulty)
+        cardColor = t.color
+        model = MemoryGame<String>(cardContent: t.content, difficulty: difficulty)
     }
     
     func customGame(diff: Difficulty, tName: ThemeName) {
+        let t = themeBuilder(tName)
         difficulty = diff
-        themeName = tName
-//        newGame()
-        model = MemoryGame<String>(theme: themeBuilder(tName), difficulty: diff)
+        themeName = t.name
+        cardColor = t.color
+        model = MemoryGame<String>(cardContent: t.content, difficulty: diff)
     }
 }
    

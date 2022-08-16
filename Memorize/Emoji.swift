@@ -725,21 +725,21 @@ struct Emoji {
     ]
     
     let vehicles = [
-        "🚗",
-        "🚕",
-        "🚌",
-        "🏎",
-        "🚓",
-        "🚑",
-        "🚒",
-        "🛻",
-        "🚜",
-        "🛵",
-        "🏍",
-        "✈️",
-        "🚀",
-        "🚁",
-        "⛵️",
+        "🚗": "car",
+        "🚕" : "taxi",
+        "🚌" : "bus",
+        "🏎" : "race car",
+        "🚓" : "police car",
+        "🚑" : "ambulance",
+        "🚒" : "fire engine",
+        "🛻" : "pickup truck",
+        "🚜" : "tractor",
+        "🛵" : "motor scooter",
+        "🏍" : "motorcycle",
+        "✈️" : "airplane",
+        "🚀" : "rocket",
+        "🚁" : "helicopter",
+        "⛵️" : "sailboat",
     ]
 }
 

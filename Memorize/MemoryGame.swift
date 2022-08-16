@@ -10,57 +10,48 @@ import Foundation
 struct MemoryGame<CardContent> where CardContent: Hashable {
     private(set) var cards: Array<Card>
     
-    private var indexOfFaceUpCard: Int?
+    private var indexOfFaceUpCard: Int? {
+        get { cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly }
+        set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue) } }
+    }
     
     var totalPoints: Int
     var currSelect: CardContent?
     var isMatch: Bool
-    var difficulty: Difficulty
-    var theme: Theme
     
     mutating func choose(_ card: Card) {
-        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
+        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),
+            !cards[chosenIndex].isFaceUp,
+            !cards[chosenIndex].isMatched
+        {
             isMatch = false
-            
             if let potentialMatchIndex = indexOfFaceUpCard {
                 if cards[chosenIndex].content == cards[potentialMatchIndex].content {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
+                    
                     totalPoints += 1000
                     if !cards[chosenIndex].beenSeen { totalPoints += 500}
                     if !cards[potentialMatchIndex].beenSeen { totalPoints += 500}
                     isMatch = true
                 }
-                else {
-                    if cards[chosenIndex].beenSeen { totalPoints -= 300}
-                }
-                indexOfFaceUpCard = nil
-                currSelect = nil
-            } else {
-                for index in cards.indices {
-                    cards[index].isFaceUp = false
-                }
-                indexOfFaceUpCard = chosenIndex
-                currSelect = nil
-            }
-            if !cards[chosenIndex].beenSeen {
-                cards[chosenIndex].beenSeen = true
-            }
-            cards[chosenIndex].isFaceUp.toggle()
+                else { if cards[chosenIndex].beenSeen { totalPoints -= 300} }
+                
+                cards[chosenIndex].isFaceUp = true
+            } else { indexOfFaceUpCard = chosenIndex }
+            
+            if !cards[chosenIndex].beenSeen { cards[chosenIndex].beenSeen = true }
             currSelect = cards[chosenIndex].description
         }
     }
        
-    init(theme th: Theme, difficulty diff: Difficulty) {
-        cards = Array<Card>()
+    init(cardContent: [CardContent: CardContent], difficulty diff: Difficulty) {
+        cards = []
         totalPoints = 0
         currSelect = nil
         isMatch = false
-        theme = th
-        difficulty = diff
-        
-        
-        let content = deckBuilder()
+
+        let content = randomContent(totalPairs: pairCounter(difficulty: diff), content: cardContent)
         
         for (k,v) in content {
             cards.append(Card(content: k, description: v, id: "\(k)"))
@@ -69,27 +60,7 @@ struct MemoryGame<CardContent> where CardContent: Hashable {
         cards.shuffle()
     }
     
-    struct Card: Identifiable {
-        var isFaceUp: Bool = false
-        var isMatched: Bool = false
-        var flipped: Bool = false
-        var beenSeen: Bool = false
-        var content: CardContent
-        var description: CardContent
-        var id: String
-    }
-    
-    struct Theme {
-        var name: ThemeName
-        var content: Dictionary<CardContent,CardContent>
-        var color: ThemeColor
-    }
-    
-    func deckBuilder () -> [CardContent:CardContent] {
-        
-        var dicts = [CardContent:CardContent]()
-        let emo = theme.content
-        
+    func pairCounter(difficulty: Difficulty) -> Int {
         var totalPairs: Int
         
         switch difficulty {
@@ -102,34 +73,40 @@ struct MemoryGame<CardContent> where CardContent: Hashable {
         case .expert:
             totalPairs = 12
         }
-
+        return totalPairs
+    }
+    
+    func randomContent(totalPairs: Int, content: [CardContent: CardContent]) -> [CardContent: CardContent] {
+        var dicts = [CardContent:CardContent]()
+        
         while dicts.count < totalPairs {
-            let e = emo.randomElement()!
-            
+            let e = content.randomElement()!
             if dicts[e.key] == nil {
                 dicts[e.key] = e.value
             }
         }
-
+        
         return dicts
     }
     
+    struct Card: Identifiable {
+        var isFaceUp = false
+        var isMatched = false
+        var flipped = false
+        var beenSeen = false
+        let content: CardContent
+        let description: CardContent
+        let id: String
+    }
 }
 
 
-
-enum Difficulty: String, CaseIterable, Identifiable {
-    case easy, medium, hard, expert
-    
-    var id: String { self.rawValue }
-}
-
-enum ThemeColor {
-    case yellow, blue, green, purple
-}
-
-enum ThemeName: String, CaseIterable, Identifiable {
-    case vehicles, animals, food, flags
-    
-    var id: String { self.rawValue }
+extension Array {
+    var oneAndOnly: Element? {
+        if count == 1 {
+            return first
+        } else {
+            return nil
+        }
+    }
 }

@@ -8,13 +8,12 @@
 import SwiftUI
 
 
-struct ContentView: View {
+struct EmojiMemoryGameView: View {
     
     @ObservedObject
-    var viewModel: EmojiMemoryGame
+    var game: EmojiMemoryGame
     var diffColor: Color {
-        
-        switch viewModel.difficulty {
+        switch game.difficulty {
         case .easy:
             return .blue
         case .medium:
@@ -27,7 +26,7 @@ struct ContentView: View {
     }
     
     var cardColor: Color {
-        switch viewModel.theme.color {
+        switch game.cardColor {
         case .yellow:
             return .yellow
         case .blue:
@@ -46,16 +45,16 @@ struct ContentView: View {
         
         VStack {
             HStack {
-                Text("Practice matching your \(viewModel.theme.name.rawValue)")
+                Text("Practice matching your \(game.themeName.rawValue)")
                 Text("|")
-                Text(viewModel.difficulty.rawValue).foregroundColor(diffColor)
+                Text(game.difficulty.rawValue).foregroundColor(diffColor)
             }
             .font(.caption2)
             ZStack(alignment: .trailing) {
                 Rectangle()
                     .frame(height: 48.0)
                     .foregroundColor(/*@START_MENU_TOKEN@*/.yellow/*@END_MENU_TOKEN@*/)
-                Text("\(viewModel.totalPoints)")
+                Text("\(game.totalPoints)")
                     .font(.body)
                     .foregroundColor(Color.black)
                     .multilineTextAlignment(.center)
@@ -64,9 +63,9 @@ struct ContentView: View {
             }
             .padding()
             
-            Text(viewModel.currSelect ?? " ")
+            Text(game.currSelect ?? " ")
             
-            if viewModel.isMatch {
+            if game.isMatch {
                 Text("Match!")
                 .frame(minWidth: 200)
                 .animation(/*@START_MENU_TOKEN@*/.easeInOut/*@END_MENU_TOKEN@*/, value: 75)
@@ -76,11 +75,11 @@ struct ContentView: View {
             
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(viewModel.cards) { card in
+                    ForEach(game.cards) { card in
                         CardView(card: card)
                             .aspectRatio(2/3, contentMode: .fit)
                             .onTapGesture {
-                                viewModel.choose(card)
+                                game.choose(card)
                             }
                     }
                 }
@@ -92,7 +91,7 @@ struct ContentView: View {
             HStack {
                 
                 Group {
-                    Button(action: viewModel.newGame) {
+                    Button(action: game.newGame) {
                         Text("New Game")
                     }
                     
@@ -113,7 +112,7 @@ struct ContentView: View {
         }
         .padding(.horizontal)
         .sheet(isPresented: $showSettings) {
-            NewGame(diff: viewModel.difficulty, theme: viewModel.themeName, showSettings: $showSettings, cgame: viewModel.customGame)
+            NewGame(diff: game.difficulty, theme: game.themeName, showSettings: $showSettings, cgame: game.customGame)
         }
     }
 }
@@ -121,9 +120,9 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        ContentView(viewModel: game)
+        EmojiMemoryGameView(game: game)
             .preferredColorScheme(.dark)
-        ContentView(viewModel: game)
+        EmojiMemoryGameView(game: game)
             .preferredColorScheme(.light)
     }
 }
