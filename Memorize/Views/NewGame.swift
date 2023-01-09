@@ -8,16 +8,11 @@
 import SwiftUI
 
 struct NewGame: View {
-    @State
-    var diff: Difficulty
+    @State var diff: Difficulty
+    @State var theme: ThemeName
+    @Binding var showSettings: Bool
     
-    @State
-    var theme: ThemeName
-    
-    @Binding
-    var showSettings: Bool
     var cgame: (Difficulty, ThemeName) -> Void
-    
     
     var body: some View {
         List {

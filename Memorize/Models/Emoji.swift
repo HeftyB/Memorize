@@ -10,7 +10,7 @@ import Foundation
 // Universal easy emoji / description pair lookup
 struct Emoji {
     
-    let animals = [
+    static let animals = [
         "🐕": "Dog",
         "🐈": "Cat",
         "🐁": "Mouse",
@@ -57,7 +57,7 @@ struct Emoji {
         "🦙": "Llama",
         "🦝": "Racoon"]
     
-    let animalsText = [ "Dog" : "🐕",
+    static let animalsText = [ "Dog" : "🐕",
         "Cat" : "🐈",
         "Mouse" : "🐁",
         "Hamster" : "🐹",
@@ -103,7 +103,7 @@ struct Emoji {
         "Llama" : "🦙",
         "Racoon" : "🦝"]
     
-    let food = [
+    static let food = [
         "🍎": "Apple",
         "🍋": "Lemon",
         "🍌": "Banana",
@@ -160,7 +160,7 @@ struct Emoji {
         "🍪": "Cookie",
         "🥜": "Peanuts"]
     
-    let foodText = [ "Apple" : "🍎",
+    static let foodText = [ "Apple" : "🍎",
         "Lemon" : "🍋",
         "Banana" : "🍌",
         "Pear" : "🍐",
@@ -217,7 +217,7 @@ struct Emoji {
         "Peanuts" : "🥜"]
     
     
-    let flags = [
+    static let flags = [
     
         "🇦🇫": "Afghanistan",
         "🇦🇽": "Åland Islands",
@@ -471,7 +471,7 @@ struct Emoji {
     ]
     
     
-    let flagsText = [
+    static let flagsText = [
         "Afghanistan" : "🇦🇫",
         "Åland Islands" : "🇦🇽",
         "Albania" : "🇦🇱",
@@ -724,7 +724,7 @@ struct Emoji {
         
     ]
     
-    let vehicles = [
+    static let vehicles = [
         "🚗": "car",
         "🚕" : "taxi",
         "🚌" : "bus",
