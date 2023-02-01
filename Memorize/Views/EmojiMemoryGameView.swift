@@ -10,113 +10,66 @@ import SwiftUI
 
 struct EmojiMemoryGameView: View {
     
-    @ObservedObject
-    var game: EmojiMemoryGame
+    @ObservedObject var game: EmojiMemoryGame
+
+    @Namespace private var dealingNameSpace
     
-    @Namespace
-    private var dealingNameSpace
+    /// Keeps track of cards that have been "dealt" in the UI
+    @State private var dealt = Set<String>()
     
-    @State
-    private var showSettings = false
+    /// Dynamic var to simulate difficulty selection
+    private var difficulty: Difficulty {
+        let count = game.theme.cardCount
+        if count > 12 { return .hard }
+        else if count > 8 { return .medium }
+        else { return .easy }
+    }
     
-    @State
-    private var dealt = Set<String>()
-    
-    var diffColor: Color {
-        switch game.difficulty {
+    /// Color for Text displaying difficulty
+    private var diffColor: Color {
+        switch difficulty {
         case .easy:
             return .blue
         case .medium:
             return .green
         case .hard:
             return .orange
-        case .expert:
-            return .red
         }
     }
     
-    var cardColor: Color {
-        switch game.cardColor {
-        case .yellow:
-            return .yellow
-        case .blue:
-            return .blue
-        case .green:
-            return .green
-        case .purple:
-            return .purple
-        }
+    ///  Conversion from saved RGB values to Color valuez
+    var cardBackColor: Color {
+        Color(rgbaColor: game.theme.color)
     }
     
     var body: some View {
         VStack {
-            HStack {
-                Text("Practice matching your \(game.themeName.rawValue)")
-                Text("|")
-                Text(game.difficulty.rawValue).foregroundColor(diffColor)
-            }
-            .font(.caption2)
-            ZStack(alignment: .trailing) {
-                Rectangle()
-                    .frame(height: 48.0)
-                    .foregroundColor(/*@START_MENU_TOKEN@*/.yellow/*@END_MENU_TOKEN@*/)
-                Text("\(game.totalPoints)")
-                    .font(.body)
-                    .foregroundColor(Color.black)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    
-            }
-            .padding()
-            
+            infoBar
+            score
             Text(game.currSelect ?? " ")
             
             if game.isMatch {
                 Text("Match!")
                 .frame(minWidth: 200)
                 .animation(/*@START_MENU_TOKEN@*/.easeInOut/*@END_MENU_TOKEN@*/, value: 75)
-                
             }
                 
             ZStack(alignment: .bottom) {
                 VStack {
                     gameBody
-                    HStack {
-                        restart
-                        Spacer()
-                        shuffle
-                    }
-                    .padding(.horizontal)
-                    
+                    buttons
                 }
                 deckBody
             }
             .padding()
-            
-            Divider()
-            HStack {
-                Group {
-                    Button(action: game.newGame) {
-                        Text("New Game")
-                    }
-                    Button(action: { showSettings.toggle() }) {
-                        Text("Settings")
-                    }
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
-                        /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-                    }
-                }
-                .padding(.all, 10.0)
-                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                .font(.footnote)
-            }
-            .padding()
         }
         .padding(.horizontal)
-        .sheet(isPresented: $showSettings) {
-            NewGame(diff: game.difficulty, theme: game.themeName, showSettings: $showSettings, cgame: game.customGame)
-        }
+        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("Color 3")/*@END_MENU_TOKEN@*/)
     }
+    
+    
+    
+    // MARK: - view components
     
     var gameBody: some View {
         AspectVGrid(items: game.cards, aspectRatio: 2/3, content: { card in
@@ -134,7 +87,7 @@ struct EmojiMemoryGameView: View {
             }
             
         })
-        .foregroundColor(cardColor)
+        .foregroundColor(cardBackColor)
     }
     
     var deckBody: some View {
@@ -147,7 +100,7 @@ struct EmojiMemoryGameView: View {
             }
         }
         .frame(width: CardConstants.undealtWidth, height: CardConstants.undealtHeight)
-        .foregroundColor(CardConstants.color)
+        .foregroundColor(cardBackColor)
         .onTapGesture {
             for card in game.cards {
                 withAnimation(dealAnimation(for: card)) {
@@ -155,6 +108,42 @@ struct EmojiMemoryGameView: View {
                 }
             }
         }
+    }
+    
+    var infoBar: some View {
+        HStack {
+            Group {
+                Text("Practice matching your \(game.theme.name)")
+                Text("|")
+            }
+            .foregroundColor(.black)
+            Text(difficulty.rawValue).foregroundColor(diffColor)
+        }
+        .font(.caption2)
+    }
+    
+    var score: some View {
+        ZStack(alignment: .trailing) {
+            Rectangle()
+                .frame(height: 48.0)
+                .foregroundColor(/*@START_MENU_TOKEN@*/Color("Color 4")/*@END_MENU_TOKEN@*/)
+            Text("\(game.totalPoints)")
+                .font(.body)
+                .foregroundColor(Color.black)
+                .multilineTextAlignment(.center)
+                .padding()
+                
+        }
+        .padding()
+    }
+    
+    var buttons: some View {
+        HStack {
+            restart
+            Spacer()
+            shuffle
+        }
+        .padding(.horizontal)
     }
     
     var shuffle: some View {
@@ -173,6 +162,8 @@ struct EmojiMemoryGameView: View {
             }
         }
     }
+    
+    // MARK: - view functions
     
     private func deal(_ card: EmojiMemoryGame.Card) {
         dealt.insert(card.id)
@@ -195,6 +186,13 @@ struct EmojiMemoryGameView: View {
         -Double(game.cards.firstIndex(where: { $0.id == card.id }) ?? 0)
     }
     
+    
+    
+    
+    private enum Difficulty: String, CaseIterable {
+        case easy, medium, hard
+    }
+    
     private struct CardConstants {
         static let color = Color.red
         static let aspectRatio: CGFloat = 2/3
@@ -208,11 +206,14 @@ struct EmojiMemoryGameView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let game = EmojiMemoryGame()
+        let game = EmojiMemoryGame(theme: ThemeStore.DefaultThemes.animals)
         game.choose(game.cards.first!)
-//        EmojiMemoryGameView(game: game)
-//            .preferredColorScheme(.dark)
-        return EmojiMemoryGameView(game: game)
-            .preferredColorScheme(.light)
+
+        return Group {
+            EmojiMemoryGameView(game: game)
+                .preferredColorScheme(.light)
+            EmojiMemoryGameView(game: game)
+                .preferredColorScheme(.dark)
+        }
     }
 }

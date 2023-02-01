@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// Provides an adaptive VGrid for a collection of items.
+/// Given an aspect ratio it calculates the minimum number of columns needed to fit all content within the view
 struct AspectVGrid<Item, ItemView>: View where ItemView: View, Item: Identifiable {
     var items: [Item]
     var aspectRatio: CGFloat
@@ -31,12 +33,12 @@ struct AspectVGrid<Item, ItemView>: View where ItemView: View, Item: Identifiabl
         }
     }
     
+    /// Syntatic sugar for GridItem spacing
     private func adaptiveGridItem(width: CGFloat) -> GridItem {
         var gridItem = GridItem(.adaptive(minimum: width))
         gridItem.spacing = 0
         return gridItem
     }
-    
     
     private func widthThatFits(itemCount: Int, in size: CGSize, itemAspectRatio: CGFloat) -> CGFloat {
         var columnCount = 1

@@ -7,34 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F1167A2628AB1C8300E8E47C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1167A2528AB1C8300E8E47C /* Theme.swift */; };
+		F11363D92971D82000743ABF /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11363D82971D82000743ABF /* ThemeView.swift */; };
+		F1167A2628AB1C8300E8E47C /* ThemeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1167A2528AB1C8300E8E47C /* ThemeStore.swift */; };
 		F1167A2828AC4E6600E8E47C /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1167A2728AC4E6600E8E47C /* AspectVGrid.swift */; };
 		F1167A2A28AC817D00E8E47C /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1167A2928AC817D00E8E47C /* Pie.swift */; };
-		F134CD3A282C7BA300880D94 /* NewGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F134CD39282C7BA300880D94 /* NewGame.swift */; };
 		F15E626A28EDE2A8001E0D93 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E626928EDE2A8001E0D93 /* Cardify.swift */; };
+		F181CEF2296DBE85002653F1 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F181CEF1296DBE85002653F1 /* Theme.swift */; };
+		F181CEF4296DC1F1002653F1 /* ThemeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F181CEF3296DC1F1002653F1 /* ThemeSelector.swift */; };
 		F19C3A03273D9D81004672F6 /* MemorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19C3A02273D9D81004672F6 /* MemorizeApp.swift */; };
 		F19C3A05273D9D81004672F6 /* EmojiMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19C3A04273D9D81004672F6 /* EmojiMemoryGameView.swift */; };
 		F19C3A07273D9D87004672F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F19C3A06273D9D87004672F6 /* Assets.xcassets */; };
 		F19C3A0A273D9D87004672F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F19C3A09273D9D87004672F6 /* Preview Assets.xcassets */; };
 		F19C3A11273DAE0D004672F6 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19C3A10273DAE0D004672F6 /* CardView.swift */; };
-		F19C3A13273E038E004672F6 /* Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19C3A12273E038E004672F6 /* Emoji.swift */; };
 		F1C61B56280E5184002BD91D /* MemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C61B55280E5184002BD91D /* MemoryGame.swift */; };
 		F1C61B58280E53CD002BD91D /* EmojiMemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C61B57280E53CD002BD91D /* EmojiMemoryGame.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F1167A2528AB1C8300E8E47C /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		F11363D82971D82000743ABF /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
+		F1167A2528AB1C8300E8E47C /* ThemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeStore.swift; sourceTree = "<group>"; };
 		F1167A2728AC4E6600E8E47C /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 		F1167A2928AC817D00E8E47C /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
-		F134CD39282C7BA300880D94 /* NewGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGame.swift; sourceTree = "<group>"; };
 		F15E626928EDE2A8001E0D93 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
+		F181CEF1296DBE85002653F1 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		F181CEF3296DC1F1002653F1 /* ThemeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelector.swift; sourceTree = "<group>"; };
 		F19C39FF273D9D81004672F6 /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F19C3A02273D9D81004672F6 /* MemorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeApp.swift; sourceTree = "<group>"; };
 		F19C3A04273D9D81004672F6 /* EmojiMemoryGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGameView.swift; sourceTree = "<group>"; };
 		F19C3A06273D9D87004672F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F19C3A09273D9D87004672F6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F19C3A10273DAE0D004672F6 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		F19C3A12273E038E004672F6 /* Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
 		F1C61B55280E5184002BD91D /* MemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGame.swift; sourceTree = "<group>"; };
 		F1C61B57280E53CD002BD91D /* EmojiMemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,7 +74,7 @@
 				F19C3A02273D9D81004672F6 /* MemorizeApp.swift */,
 				F1D179D928BA9615006EDEF2 /* Views */,
 				F1D179D828BA95F0006EDEF2 /* Models */,
-				F1D179DA28BA9628006EDEF2 /* ViewModel */,
+				F1D179DA28BA9628006EDEF2 /* ViewModels */,
 				F19C3A06273D9D87004672F6 /* Assets.xcassets */,
 				F19C3A08273D9D87004672F6 /* Preview Content */,
 			);
@@ -90,9 +92,8 @@
 		F1D179D828BA95F0006EDEF2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F19C3A12273E038E004672F6 /* Emoji.swift */,
 				F1C61B55280E5184002BD91D /* MemoryGame.swift */,
-				F1167A2528AB1C8300E8E47C /* Theme.swift */,
+				F181CEF1296DBE85002653F1 /* Theme.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -105,17 +106,19 @@
 				F19C3A10273DAE0D004672F6 /* CardView.swift */,
 				F15E626928EDE2A8001E0D93 /* Cardify.swift */,
 				F1167A2928AC817D00E8E47C /* Pie.swift */,
-				F134CD39282C7BA300880D94 /* NewGame.swift */,
+				F181CEF3296DC1F1002653F1 /* ThemeSelector.swift */,
+				F11363D82971D82000743ABF /* ThemeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		F1D179DA28BA9628006EDEF2 /* ViewModel */ = {
+		F1D179DA28BA9628006EDEF2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				F1167A2528AB1C8300E8E47C /* ThemeStore.swift */,
 				F1C61B57280E53CD002BD91D /* EmojiMemoryGame.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,12 +194,13 @@
 				F15E626A28EDE2A8001E0D93 /* Cardify.swift in Sources */,
 				F1167A2A28AC817D00E8E47C /* Pie.swift in Sources */,
 				F19C3A05273D9D81004672F6 /* EmojiMemoryGameView.swift in Sources */,
-				F1167A2628AB1C8300E8E47C /* Theme.swift in Sources */,
-				F134CD3A282C7BA300880D94 /* NewGame.swift in Sources */,
+				F1167A2628AB1C8300E8E47C /* ThemeStore.swift in Sources */,
 				F19C3A11273DAE0D004672F6 /* CardView.swift in Sources */,
 				F1C61B56280E5184002BD91D /* MemoryGame.swift in Sources */,
-				F19C3A13273E038E004672F6 /* Emoji.swift in Sources */,
+				F11363D92971D82000743ABF /* ThemeView.swift in Sources */,
+				F181CEF4296DC1F1002653F1 /* ThemeSelector.swift in Sources */,
 				F19C3A03273D9D81004672F6 /* MemorizeApp.swift in Sources */,
+				F181CEF2296DBE85002653F1 /* Theme.swift in Sources */,
 				F1C61B58280E53CD002BD91D /* EmojiMemoryGame.swift in Sources */,
 				F1167A2828AC4E6600E8E47C /* AspectVGrid.swift in Sources */,
 			);
@@ -337,7 +341,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -367,7 +371,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
